@@ -1,0 +1,84 @@
+# Spring Boot specific
+/target/
+/bin/
+/build/
+/out/
+
+# IDE/Editor-specific files
+/.idea/
+/.vscode/
+*.iml
+*.ipr
+*.iws
+*.swp
+
+# Log files
+*.log
+log/
+logs/
+
+# Compiled Java classes
+*.class
+
+# Gradle specific
+/.gradle/
+build/
+
+# Maven specific
+/target/
+pom.xml.tag
+release.properties
+dependency-reduced-pom.xml
+/.mvn/
+*mvn
+*mvn.cmd
+
+# Application properties
+/application.properties
+
+# Compiled bytecode
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Eclipse specific
+.settings/
+.classpath
+.project
+/.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+
+# STS (Spring Tool Suite) specific
+.springBeans
+
+# NetBeans specific
+/nbproject/private/
+
+# IntelliJ IDEA specific
+*.iml
+*.iws
+.idea/
+
+# Visual Studio Code specific
+.vscode/
+
+#json file conf
+*.json
+
+#Other files
+*.cmd
+/mvnw/
