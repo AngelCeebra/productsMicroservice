@@ -1,13 +1,19 @@
 package com.microservice.app.items.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +28,17 @@ import com.microservice.app.items.models.service.IItemService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 
+@RefreshScope
+//POST url: ip:port/actuator/refresh
+//refresh changes in config server
 @RestController
 public class ItemController {
 
 	
 	private final Logger log = LoggerFactory.getLogger(ItemController.class);
+	
+	@Autowired
+	private Environment env;
 	
 	@SuppressWarnings("rawtypes")
 	@Autowired
@@ -35,6 +47,9 @@ public class ItemController {
 	@Autowired
 	@Qualifier("serviceFeign")
 	private IItemService itemService;
+	
+	@Value("${config.text}")
+	private String text;
 	
 	@GetMapping("/lists")
 	public List<Item> lists(@RequestParam(name="name", required = false) String name, @RequestHeader(name="token-request", required = false) String token){
@@ -107,4 +122,19 @@ public class ItemController {
         return  ResponseEntity.ok().body(item);
     }
 
+	@GetMapping("/get-config")
+	public  ResponseEntity<?> getConfig(@Value("${server.port}") String port) {
+		
+		log.info(text);
+		
+		Map<String, String> json = new HashMap<>();
+		json.put("text", text);
+		json.put("port", port);
+		if(env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("dev")) {
+			json.put("author.name", env.getProperty("config.author.name"));
+			json.put("author.email", env.getProperty("config.author.email"));
+		}
+		return new ResponseEntity<Map<String, String>>(json, HttpStatus.OK);
+	}
+	
 }
