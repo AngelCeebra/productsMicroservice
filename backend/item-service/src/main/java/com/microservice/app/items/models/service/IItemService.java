@@ -3,7 +3,7 @@ package com.microservice.app.items.models.service;
 import java.util.List;
 
 import com.microservice.app.items.models.entity.Item;
-import com.microservice.app.items.models.entity.Product;
+import com.microservice.app.commons.models.entity.Product;
 
 public interface IItemService {
 

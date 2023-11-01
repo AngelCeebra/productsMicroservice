@@ -1,4 +1,4 @@
-package com.microservice.app.products.models.entity;
+package com.microservice.app.commons.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;

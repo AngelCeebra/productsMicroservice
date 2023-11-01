@@ -2,7 +2,7 @@ package com.microservice.app.products.models.service;
 
 import java.util.List;
 
-import com.microservice.app.products.models.entity.Product;
+import com.microservice.app.commons.models.entity.Product;
 
 public interface IProductService {
 	
